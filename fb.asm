@@ -87,105 +87,99 @@ segment .bss
 
     ;mul 10
      	%macro multen 1
-     	mov rax,%1
-     	push r10
-     	mov r10,10
-     	mul r10
-     	pop r10
+     	mov 	rax,	%1
+     	push	r10
+     	mov	r10,	10
+     	mul 	r10
+     	pop	r10
    	%endmacro
 
     ;div 10
-     %macro divten 1
-     mov rax,%1  
-     push rdx
-     push r10
-     mov r10,10    ;r10=10 
-     mov rdx,0
-     div r10
-     pop r10
-     pop rdx
-   %endmacro
+     	%macro divten 1
+     	mov 	rax,	%1  
+     	push 	rdx
+     	push 	r10
+     	mov 	r10,	10    ;r10=10 
+     	mov 	rdx,	0
+     	div 	r10
+     	pop 	r10
+     	pop 	rdx
+   	%endmacro
 
 
-    	buff resb 64
+    	buff 	resb 	64
 
- 	temp: resb 2	;where we stored dig we will print
+ 	temp: 	resb 	2	;where we stored dig we will print
 
     ;counter1: resb 64
     ;counter2: resb 64
 
-    result:resb 64
-    input : resb 64
-    num: resw 64
+    	result:	resb 	64
+    	input : 	resb 	64
+    	num: 	resw 	64
 
 segment .text
-  global _start
+  	global _start
 _start:
 
-
-
-
-
-
-	
 	;-----------------start reading---------------
-	mov rax, 3
-	mov rbx,1
-	mov rcx, input
-	mov rdx, 64
-	int 80h
+	mov 	rax,	3
+	mov 	rbx,	1
+	mov 	rcx, 	input
+	mov 	rdx, 	64
+	int 	80h
 
-	mov rsi, input
-	mov rdi,num
-	push rdi
-	mov r13," "
-	push r13
+	mov 	rsi, 	input
+	mov 	rdi,	num
+	push 	rdi
+	mov 	r13,	" "
+	push 	r13
 readInput:
 	;mov rax,rsi
 	lodsb 
-	cmp rax, 0xa    ; if rax holds a new line
-	je    endMark
+	cmp 	rax,	0xa    ; if rax holds a new line
+	je    	endMark
 	
-	cmp rax," "	;rax==" "
-	je generate
-	cmp rax, '0'    
-	jb      readInput     	;rax<'0'
-	cmp rax, '9'
-	ja     readInput     		;rax>'9'
-	sub rax,'0'
-	push rax
-	jmp readInput
+	cmp 	rax,	" "	;rax==" "
+	je 	generate
+	cmp 	rax, 	'0'    
+	jb      	readInput     	;rax<'0'
+	cmp 	rax, 	'9'
+	ja     	readInput     		;rax>'9'
+	sub 	rax,	'0'
+	push 	rax
+	jmp 	readInput
 endMark:
-	mov r12,"e"
+	mov 	r12,	"e"
 generate:
-	mov rax," "
+	mov 	rax,	" "
 	;push rax
-	mov r9,1
-	mov r10,0 ;r10 stored the sum
+	mov 	r9,	1
+	mov 	r10,	0 ;r10 stored the sum
 construction:
-	pop rax
-	cmp rax ," "
-	je exitCon
-	mul r9
-	add r10,rax
-	multen r9
-	mov r9,rax
-	jmp construction
+	pop 	rax
+	cmp 	rax ,	" "
+	je 	exitCon
+	mul 	r9
+	add 	r10,	rax
+	multen 	r9
+	mov 	r9,	rax
+	jmp 	construction
 exitCon:
-	pop rdi
-	mov rax,r10
+	pop 	rdi
+	mov 	rax,	r10
 	
 	stosw
 	push 	rdi
-	cmp r12,'e'
-	je exitRead
+	cmp 	r12,	'e'
+	je 	exitRead
 
-	push rdi
+	push 	rdi
 
 
-	mov rax, " "
-	push rax
-	jmp readInput
+	mov 	rax,	 " "
+	push 	rax
+	jmp 	readInput
 
 
 
@@ -220,36 +214,36 @@ loop:
 	;add r15,'0'
 	mov 	rdx,	0	
 	mov 	r13,	10
-	mov rax,rsi
-	div r13
-	mov r13, rax
-	add r13,'0'
-	mov r14,rdx
-	add r14,'0'
+	mov 	rax,	rsi
+	div 	r13
+	mov 	r13, 	rax
+	add 	r13,	'0'
+	mov 	r14,	rdx
+	add 	r14,	'0'
 
 
 
-	mov [temp], r13
+	mov 	[temp], 	r13
 	;add byte [temp], '0'
 	;add r15,byte [temp]
 
 	;mov  [counter1] ,r15
 	;add r15,rsi
 	;write temp, 1;write count 
-	mov [temp],r14
+	mov 	[temp],	r14
 	;write temp,1
 
 	;write newLine, 1
 
 	;mov rcx,0
 	;mov [buff],rcx
-cal:	push r12	;save the f(n-1),stack p3
-	add r12,r15	;get f(n)
-	push r12	;save the f(n),stack p4
-	add r12,'0'	;
+cal:	push 	r12	;save the f(n-1),stack p3
+	add 	r12,	r15	;get f(n)
+	push 	r12	;save the f(n),stack p4
+	add 	r12,	'0'	;
 
 
-	mov [buff], r12
+	mov 	[buff], 	r12
 	;write buff, 64
 	;write newLine, 1
 		
