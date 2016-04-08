@@ -6,7 +6,6 @@ section 	.data
 	counter1: 	dq 	0
     	counter2: 	dq 	0
     	counter2_o:	dq	1
-	end:	dq 	0
 	newLine	db  	0xa
 	newLine_length equ 	$-newLine
 
@@ -39,7 +38,7 @@ section .bss
  	mov 	rsi,	cvarnum
  	lodsb
  	cmp 	rax,	7
- 	jb 	fcolor
+ 	jb 	fcolor%1
  	mov 	rdi,	8
  	mov 	rdx, 	0
  	div 	rdi
@@ -47,7 +46,7 @@ section .bss
  	add 	rax, 	'0'
  	stosb
  	mov 	rax,	rdx
- fcolor:
+ fcolor%1:
  	mov 	rdi,	cvar2
  	add 	rax, 	'0'
  	stosb
@@ -101,9 +100,7 @@ section .bss
      	pop 	rdx
    	%endmacro
 
-	buff 	resb 	64
 	temp: 	resq 	1	;where we stored dig we will print	
-    	sum:	resq 	1
     	fibnum1: 	resq 	1
     	fibnum2: 	resq 	1
     	fibnum2_o: 	resq 	1
@@ -204,8 +201,13 @@ calLong:
 	mov 	rbx, 	qword[fibnum2]
 	mov 	qword[fibnum2_o],	rbx	;backup fb2
 
-	;-----------handle minus---------------
-
+	;----------print f(1)--------------
+	; cmp 	qword[counter],		1
+	; jne 	notfone
+	; writecolor	fibnum2
+	; write 	newLine,	newLine_length
+	
+notfone:
 	mov 	r10,	rbx
 
 	;-----------if the result is overFlow--------
@@ -308,6 +310,6 @@ printfb:
 	writecolor temp
 	jmp 	printfb
 afterPrint:
-	write newLine,newLine_length
+	write 	newLine,	newLine_length
 	inc 	qword[cvarnum]
 	jmp 	calLong
