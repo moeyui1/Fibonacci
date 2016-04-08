@@ -3,7 +3,8 @@ global _start
 
 section .data
 ;'[1,37mtext'
-	testnum: 	db 	"5"
+                
+	testnum: 	dq 	0x7FFFFFFFFFFFFFFF
 	cvarnum:	db	1
 
 	setcolor :	db 	1Bh, '['
@@ -72,15 +73,19 @@ _start:
  ;    	mov rcx, setcolor
  ;    	mov rdx, len
  ;    	int 	80h
- 	mov 	r10,	11
- 	push 	r10
- debug:	
- 	write 	testnum
- 	pop 	r10
- 	sub 	r10,	1
- 	cmp 	r10,	0
- 	push 	r10
- 	jne 	debug
+ ; 	mov 	r10,	11
+ ; 	push 	r10
+ ; debug:	
+ ; 	write 	testnum
+ ; 	pop 	r10
+ ; 	sub 	r10,	1
+ ; 	cmp 	r10,	0
+ ; 	push 	r10
+ ; 	jne 	debug
+
+            mov  r10,   	-100
+            mov r11,	2
+            add 	r10,	r11
 
 exit:
 	mov rax, 1
