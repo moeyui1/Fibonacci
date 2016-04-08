@@ -3,6 +3,8 @@ global _start
 
 section .data
 ;'[1,37mtext'
+	L1	db	0
+	L2	dw 	1000
                 
 	testnum: 	dq 	0x7FFFFFFFFFFFFFFF
 	cvarnum:	db	1
@@ -83,9 +85,7 @@ _start:
  ; 	push 	r10
  ; 	jne 	debug
 
-            mov  r10,   	-100
-            mov r11,	2
-            add 	r10,	r11
+            mov 	[L1],	1
 
 exit:
 	mov rax, 1
