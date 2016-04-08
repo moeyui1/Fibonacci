@@ -8,6 +8,8 @@ section 	.data
     	counter2_o:	dq	1
 	newLine	db  	0xa
 	newLine_length equ 	$-newLine
+	welcome:	db	"Input numbers:",	0xa
+	welcomeLen:	equ 	$-welcome
 
 	;'[1,37mtext'
 	testnum: 	db 	"5"
@@ -110,6 +112,8 @@ section .bss
 
 section 	.text
 _start:
+	write 	welcome,	welcomeLen
+
 ;-----------------start reading---------------
 	mov 	rax,	3
 	mov 	rbx,	1
